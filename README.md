@@ -7,4 +7,3 @@ An Ansible Role that installs [Docker](https://www.docker.com) cli on Linux.
 ## Requirements
 
 None.
-
