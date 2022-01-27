@@ -42,7 +42,6 @@
 - name: Install Docker SDK for python.
   package:
     name:
-      - python-docker
       - python3-docker
     state: present
 
