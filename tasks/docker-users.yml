@@ -1,8 +1,13 @@
 ---
+- name: Add the docker group
+  group:
+    name: "{{ docker_group }}"
+    gid: 998
+    state: present
+
 - name: Ensure docker users are added to the docker group.
   user:
     name: "{{ item }}"
-    groups: docker
+    groups: "{{ docker_group }}"
     append: true
   with_items: "{{ docker_users }}"
-  notify: restart docker

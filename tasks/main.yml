@@ -1,13 +1,51 @@
 ---
 - include_tasks: is_systemd.yml
 
-- include_tasks: setup-Debian.yml
-  when: ansible_os_family == 'Debian'
+# Variable configuration.
+- include_tasks: variables.yml
+
+- name: Ensure dependencies are installed.
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - debian-keyring
+      - debian-archive-keyring
+      - apt-transport-https
+      - gnupg2
+      - curl
+    state: present
+
+- name: Add Docker apt key.
+  become: true
+  become_user: root
+  apt_key:
+    url: "{{ docker_apt_gpg_key }}"
+    state: present
+
+- name: Add Docker repository.
+  apt_repository:
+    repo: "{{ docker_apt_repository }}"
+    state: present
+    update_cache: true
 
 - name: Install Docker CLI.
-  package:
-    name: "{{ docker_package }}"
-    state: "{{ docker_package_state }}"
+  apt:
+    name: "{{ docker_packages }}"
+    state: present
+
+- name: Install Docker Compose SDK for python.
+  become: true
+  become_user: root
+  pip:
+    name:
+      - docker
+      - docker-compose
+    state: present
+    executable: pip3
 
 - include_tasks: docker-compose.yml
   when: docker_install_compose | bool
+
+- include_tasks: docker-users.yml
+  when: docker_users | length > 0
