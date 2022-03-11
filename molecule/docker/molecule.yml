@@ -8,31 +8,19 @@ dependency:
 
 driver:
   name: docker
+
 platforms:
-  - name: homelab-local
-    image: homelab:local
+  - name: "homelab-local-${role_under_test:-norole}"
+    image: "${MOLECULE_DOCKER_IMAGE:-homelab:local}"
     pre_build_image: true
+
 provisioner:
   name: ansible
+  log: true
   inventory:
     group_vars:
       all:
         ansible_python_interpreter: /usr/bin/python3
+
 verifier:
   name: testinfra
-scenario:
-  # Do nother with this docker test. Normally means it will not work in docker
-  create_sequence:
-    - dependency
-  check_sequence:
-    - dependency
-    - cleanup
-  converge_sequence:
-    - dependency
-  destroy_sequence:
-    - dependency
-    - cleanup
-  test_sequence:
-    - lint
-    - dependency
-    - cleanup
