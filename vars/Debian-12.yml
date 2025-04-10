@@ -1,0 +1,9 @@
+---
+__docker_version: "5:20.10.12~3-0~debian-bullseye"
+__docker_apt_repository: "deb [arch=amd64] https://download.docker.com/linux/debian bookworm stable"
+__docker_bin_path: "/usr/bin/docker"
+__docker_config_path: "/etc/docker"
+__docker_packages:
+  - python3-docker
+  - "docker-{{ docker_edition if docker_edition | length > 0 else 'ce' }}-cli"
+
