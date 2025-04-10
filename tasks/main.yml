@@ -34,17 +34,7 @@
     name: "{{ docker_packages }}"
     state: present
 
-- name: Install Docker Compose SDK for python.
-  become: true
-  become_user: root
-  pip:
-    name:
-      - docker-compose
-    state: present
-    executable: pip3
 
-- include_tasks: docker-compose.yml
-  when: docker_install_compose | bool
 
 - include_tasks: docker-users.yml
   when: docker_users | length > 0
