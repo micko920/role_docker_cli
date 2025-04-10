@@ -39,7 +39,6 @@
   become_user: root
   pip:
     name:
-      - docker
       - docker-compose
     state: present
     executable: pip3
