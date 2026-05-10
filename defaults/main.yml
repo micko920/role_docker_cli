@@ -5,7 +5,7 @@ docker_package_state: present
 
 # Docker Compose options.
 docker_install_compose: true
-docker_compose_version: "1.29.2"
+docker_compose_version: "2.26.1-4"
 docker_compose_path: /usr/local/bin/docker-compose
 
 docker_apt_gpg_key: https://download.docker.com/linux/debian/gpg

@@ -1,0 +1,12 @@
+---
+__docker_version: "5:29.3.1-1~debian.13~trixie"
+__docker_apt_repository: "deb [arch=amd64] https://download.docker.com/linux/debian trixie stable"
+__docker_bin_path: "/usr/bin/docker"
+__docker_config_path: "/etc/docker"
+__docker_packages:
+  - python3-docker
+  - containerd.io
+  - docker-buildx-plugin
+  - docker-compose-plugin
+  - "docker-{{ docker_edition if docker_edition | length > 0 else 'ce' }}-cli"
+
