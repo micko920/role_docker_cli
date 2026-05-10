@@ -16,18 +16,24 @@
       - curl
     state: present
 
-- name: Add Docker apt key.
-  become: true
-  become_user: root
-  apt_key:
-    url: "{{ docker_apt_gpg_key }}"
-    state: present
+- name: Ensure /etc/apt/keyrings exists
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
 
-- name: Add Docker repository.
-  apt_repository:
+- name: Download Docker GPG key
+  ansible.builtin.get_url:
+    url: "{{ docker_apt_gpg_key }}"
+    dest: /etc/apt/keyrings/docker.asc
+    mode: '0644'
+
+- name: Add Docker repository to Apt sources
+  ansible.builtin.apt_repository:
     repo: "{{ docker_apt_repository }}"
     state: present
     update_cache: true
+    filename: docker
 
 - name: Install Docker CLI.
   apt:
